@@ -1,0 +1,33 @@
+version: "3.9"
+   
+services:
+  db:
+    image: postgres
+    volumes:
+      - pg_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=music_app
+      - POSTGRES_USER=music_app_user
+      - POSTGRES_PASSWORD=password
+  web:
+    build:
+      dockerfile: docker/Dockerfile
+      context: ..
+    volumes:
+      - ..:/music_app
+    command:
+      - /bin/sh
+      - -c
+      - |
+        python manage.py migrate --noinput
+        python manage.py collectstatic --noinput
+        python manage.py runserver 0.0.0.0:8080
+    env_file:
+      - .env
+    ports:
+      - "8080:8080"
+    links:
+      - db
+
+volumes:
+  pg_data:
