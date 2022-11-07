@@ -16,11 +16,6 @@ class AlbumSerializer(serializers.ModelSerializer):
                
 class SongSerializer(serializers.ModelSerializer):
     album = AlbumSerializer
-    # user_id = serializers.ReadOnlyField()
-    # fuel_consumption_per_minute = serializers.SerializerMethodField(
-    #     source='get_fuel_consumption_per_minute'
-    # )
-
     class Meta:
         model = Song
         fields = ("id", "title", "albums")
@@ -29,11 +24,6 @@ class SongSerializer(serializers.ModelSerializer):
 class SongAlbumSerializer(serializers.ModelSerializer):
     album = AlbumSerializer
     song = SongSerializer
-    # user_id = serializers.ReadOnlyField()
-    # fuel_consumption_per_minute = serializers.SerializerMethodField(
-    #     source='get_fuel_consumption_per_minute'
-    # )
-
     class Meta:
         model = SongAlbum
         fields = ("id", "song", "album", "number")     
